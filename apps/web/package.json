@@ -1,0 +1,27 @@
+{
+  "name": "@fork-lens/web",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "cf dev",
+    "build": "cf build",
+    "preview": "vp preview --host 127.0.0.1 --port 8788",
+    "deploy": "cf deploy",
+    "typecheck": "cf workers types && tsc --noEmit",
+    "test": "vp test"
+  },
+  "dependencies": {
+    "react": "19.3.1",
+    "react-dom": "19.3.1"
+  },
+  "devDependencies": {
+    "@cloudflare/vite-plugin": "2.0.0-beta.v.17",
+    "@types/react": "19.3.0",
+    "@types/react-dom": "19.3.0",
+    "@vitejs/plugin-react": "6.3.0",
+    "cf": "1.0.0-beta.32",
+    "typescript": "7.0.2",
+    "vite": "npm:@voidzero-dev/vite-plus-core@1.6.0",
+    "vite-plus": "1.6.0"
+  }
+}

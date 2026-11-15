@@ -3,14 +3,16 @@
 Fork Lensは、公開GitHubリポジトリのforkにある独自の変更を要約し、自分のforkへ取り込むためのプロンプトを作るWebアプリ。
 初期構成はCloudflareにまとめ、解析結果の再利用で運用費を抑える。
 
+開発基盤は Bun workspaces + Turborepo。`apps/web` は React + Vite+、`apps/api` は Hono とし、それぞれ別の Worker にデプロイする。Web Worker は静的ファイルを配信し、`/api/*` を Service Binding で API Worker に転送する。D1 と Workers AI は API Worker だけに接続し、Drizzle のスキーマとマイグレーションは `packages/db` で管理する。
+
 ## 構成
 
-| 用途 | サービス | 役割 |
-| --- | --- | --- |
-| 画面・API | Cloudflare Workers | 画面配信、GitHub APIからの情報取得、解析の受付 |
-| DB | Cloudflare D1 | リポジトリ情報、解析状態、要約、根拠となるコミット・ファイル、利用回数の保存 |
-| AI | Cloudflare Workers AI | コード差分から機能や変更の説明を生成 |
-| 大きなファイルの保存 | Cloudflare R2 | 大きな差分の保存が必要になったら追加 |
+| 用途                 | サービス              | 役割                                                                         |
+| -------------------- | --------------------- | ---------------------------------------------------------------------------- |
+| 画面・API            | Cloudflare Workers    | 画面配信、GitHub APIからの情報取得、解析の受付                               |
+| DB                   | Cloudflare D1         | リポジトリ情報、解析状態、要約、根拠となるコミット・ファイル、利用回数の保存 |
+| AI                   | Cloudflare Workers AI | コード差分から機能や変更の説明を生成                                         |
+| 大きなファイルの保存 | Cloudflare R2         | 大きな差分の保存が必要になったら追加                                         |
 
 AIモデルはGLM-4.7-Flashを候補とし、実際の差分で要約の正確さを確認してから決める。
 

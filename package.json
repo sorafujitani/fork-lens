@@ -1,0 +1,37 @@
+{
+  "name": "fork-lens",
+  "private": true,
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "type": "module",
+  "scripts": {
+    "dev": "turbo run dev",
+    "build": "turbo run build",
+    "typecheck": "tsc --noEmit && turbo run typecheck",
+    "lint": "vp lint",
+    "format": "vp fmt",
+    "format:check": "vp fmt --check",
+    "test": "turbo run test",
+    "check": "bun run format:check && bun run lint && bun run typecheck && bun run test",
+    "db:generate": "bun run --cwd packages/db generate",
+    "db:migrate:local": "bun run --cwd apps/api db:migrate:local",
+    "deploy:api": "bun run --cwd apps/api deploy",
+    "deploy:web": "bun run --cwd apps/web deploy"
+  },
+  "devDependencies": {
+    "@types/node": "24.19.2",
+    "oxfmt": "0.78.0",
+    "oxlint": "1.93.0",
+    "turbo": "2.11.11",
+    "typescript": "7.0.2",
+    "vite": "npm:@voidzero-dev/vite-plus-core@1.6.0",
+    "vite-plus": "1.6.0"
+  },
+  "overrides": {
+    "vite": "npm:@voidzero-dev/vite-plus-core@1.6.0",
+    "vitest": "5.1.0"
+  },
+  "packageManager": "bun@1.4.4"
+}
